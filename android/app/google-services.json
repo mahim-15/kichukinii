@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "324719605583",
+    "project_id": "kichukini2",
+    "storage_bucket": "kichukini2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324719605583:android:d44ff6955573feca5ef73a",
+        "android_client_info": {
+          "package_name": "com.example.kichukini"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF6by1WmheOydMjQ6KHztGMTxNhv-rGi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
