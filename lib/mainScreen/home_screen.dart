@@ -1,5 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:kichukini/widget/home_slider.dart';
 import 'package:kichukini/widget/my_drawer.dart';
+import 'package:kichukini/widget/categories.dart'; // Import Categories Widget
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Kichukini',
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,6 +31,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int currentSlide = 4;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,10 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Colors.pinkAccent,
                 Colors.purpleAccent,
               ],
-              begin: FractionalOffset(0.0, 0.0),
-              end: FractionalOffset(1.0, 0.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp,
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
             ),
           ),
         ),
@@ -37,25 +59,59 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         centerTitle: true,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (c) => const CartScreen()),
+              );
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          // Search Bar Below AppBar
           Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              icon: const Icon(Icons.shopping_cart),
-              color: Colors.white, // Changed to white for visibility
-              onPressed: () {
-                // Navigate to Cart Screen
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (c) => CartScreen()));
-              },
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.grey[200], // Light background
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Search...",
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                ),
+              ),
             ),
           ),
+
+          // Home Slider
+          HomeSlider(
+            onChange: (value) {
+              setState(() {
+                currentSlide = value;
+              });
+            },
+            currentSlide: currentSlide,
+          ),
+
+          // Categories Section
+          const SizedBox(height: 20), // Space before categories
+          const Categories(), // Extracted widget for cleaner code
         ],
       ),
     );
   }
 }
 
-// Dummy Cart Screen (Replace with your actual cart screen)
+// Dummy Cart Screen
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
@@ -70,10 +126,8 @@ class CartScreen extends StatelessWidget {
                 Colors.pinkAccent,
                 Colors.purpleAccent,
               ],
-              begin: FractionalOffset(0.0, 0.0),
-              end: FractionalOffset(1.0, 0.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp,
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
             ),
           ),
         ),
