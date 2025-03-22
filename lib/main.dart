@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kichukini/authScreen/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'KICHUKINI app',
+      scrollBehavior: const CupertinoScrollBehavior(),
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
