@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:kichukini/mainScreen/cart_screen.dart';
 import 'package:kichukini/widget/home_slider.dart';
 import 'package:kichukini/widget/my_drawer.dart';
 import 'package:kichukini/widget/categories.dart';
@@ -142,41 +143,41 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 
-// Dummy Cart Screen
-class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+// // Dummy Cart Screen
+// class CartScreen extends StatelessWidget {
+//   const CartScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.pinkAccent,
-                Colors.purpleAccent,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.topRight,
-            ),
-          ),
-        ),
-        title: const Text(
-          "My Cart",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          "Your Cart is Empty",
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         flexibleSpace: Container(
+//           decoration: const BoxDecoration(
+//             gradient: LinearGradient(
+//               colors: [
+//                 Colors.pinkAccent,
+//                 Colors.purpleAccent,
+//               ],
+//               begin: Alignment.topLeft,
+//               end: Alignment.topRight,
+//             ),
+//           ),
+//         ),
+//         title: const Text(
+//           "My Cart",
+//           style: TextStyle(
+//             fontSize: 24,
+//             fontWeight: FontWeight.bold,
+//           ),
+//         ),
+//         centerTitle: true,
+//       ),
+//       body: const Center(
+//         child: Text(
+//           "Your Cart is Empty",
+//           style: TextStyle(fontSize: 18),
+//         ),
+//       ),
+//     );
+//   }
+// }
