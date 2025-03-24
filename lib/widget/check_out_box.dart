@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:kichukini/mainScreen/home_screen.dart';
+import 'package:kichukini/mainScreen/my_order_screen.dart';
+//import 'package:kichukini/mainScreen/my_orders_screen.dart'; // Import your orders screen
 import 'package:kichukini/models/cart_item.dart';
 
-const Color kPrimaryColor = Colors.blue; // Define the primary color
-const Color kContentColor = Colors.grey; // Define the content color
+const Color kprimaryColor = Colors.red;
+ // Added this constant since it was used but not defined
 
 class CheckOutBox extends StatelessWidget {
   final List<CartItem> items;
-  
-  const CheckOutBox({super.key, required this.items});
+  const CheckOutBox({
+    super.key,
+    required this.items,
+  });
 
   @override
   Widget build(BuildContext context) {
-    double subtotal = items.isNotEmpty
-        ? items.map((e) => e.quantity * e.product.price).fold(0, (a, b) => a + b)
-        : 0.0;
+    // Calculate total amount
+    final totalAmount = items.length > 1 
+        ? items.map<double>((e) => e.quantity * e.product.price).reduce((value1, value2) => value1 + value2) 
+        : items[0].product.price * items[0].quantity;
 
     return Container(
-      height: 220,
+      height: 300,
       width: double.infinity,
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -41,7 +46,7 @@ class CheckOutBox extends StatelessWidget {
                 horizontal: 15,
               ),
               filled: true,
-              fillColor: kContentColor.withOpacity(0.2),
+              fillColor: kcontentColor.withOpacity(0.1),
               hintText: "Enter Discount Code",
               hintStyle: const TextStyle(
                 fontSize: 14,
@@ -53,7 +58,7 @@ class CheckOutBox extends StatelessWidget {
                 child: const Text(
                   "Apply",
                   style: TextStyle(
-                    color: kPrimaryColor,
+                    color: kprimaryColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -62,36 +67,99 @@ class CheckOutBox extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          _buildPriceRow("Subtotal", subtotal),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Subtotal",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                ),
+              ),
+              Text(
+                "\$$totalAmount",
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ],
+          ),
           const SizedBox(height: 10),
           const Divider(),
           const SizedBox(height: 10),
-          _buildPriceRow("Total", subtotal),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Total",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "\$$totalAmount",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              // Show success dialog
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Order Successful"),
+                    content: const Text("Your order has been placed successfully!"),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context); // Close the dialog
+                          // Navigate to My Orders screen and clear the back stack
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => const MyOrdersScreen()),
+                            (Route<dynamic> route) => false,
+                          );
+                        },
+                        child: const Text("OK"),
+                      ),
+                    ],
+                  );
+                },
+              );
+              
+              // Here you would typically:
+              // 1. Send the order to your backend
+              // 2. Clear the cart
+              // 3. Then show the success message
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kprimaryColor,
+              minimumSize: const Size(double.infinity, 55),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+            child: const Text(
+              "Check out",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ],
       ),
-    );
-  }
-
-  Widget _buildPriceRow(String label, double amount) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey,
-          ),
-        ),
-        Text(
-          "\$${amount.toStringAsFixed(2)}",
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
     );
   }
 }

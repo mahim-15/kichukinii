@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kichukini/authScreen/auth_screen.dart';
 import 'package:kichukini/global/global.dart';
+import 'package:kichukini/mainScreen/my_order_screen.dart';
 import 'package:kichukini/splashScreen/my_splash_screen.dart';
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
@@ -90,7 +91,12 @@ class _MyDrawerState extends State<MyDrawer> {
                   style:TextStyle(color: Colors.grey),
                 ),
                 onTap: (){
-
+                   Navigator.pop(context); 
+                   // Close the drawer
+                   Navigator.push(context, 
+                   MaterialPageRoute(builder: (context)=>MyOrdersScreen()),
+                   );
+   
                 },
 
               ),

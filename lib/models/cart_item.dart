@@ -14,5 +14,6 @@ class CartItem {
 List<CartItem>cartItems=[
   CartItem(quantity: 2, product: products[0]),
   CartItem(quantity: 1, product: products[1]),
+  CartItem(quantity: 1 ,product: products[2]),
 
 ];
